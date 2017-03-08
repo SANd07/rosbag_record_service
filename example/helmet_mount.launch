@@ -1,0 +1,39 @@
+<launch>
+<arg name= "destination" value="media/rasl/Samsung_T3/" />
+    <node pkg="rosbag_record_service" type="record_service_node.py" name="record_service" output="screen" clear_params="true">
+        <param name="output_folder" value="$(arg destination)bags/%Y-%m-%d/%Y-%m-%d-%H-%M-%S" />
+        <rosparam param="topic_groups">
+select:
+  all: False
+  regex: /raven(.*)
+  topics:
+  - /camera/depth/camera_info
+  - /camera/depth/image
+  - /diagnostics
+  - /rosout
+  - /rosout_agg
+  - /terarangerone
+  - /terarangerone/parameter_descriptions
+  - /terarangerone/parameter_updates
+  - /thermal_camera/image_raw
+  quiet: True
+  buffsize: 1024
+raven:
+  all: False
+  regex: /raven(.*)
+  quiet: True
+  buffsize: 1024
+structure:
+  all: False
+  topics:
+  - /camera/depth/points
+  - /camera/depth/camera_info
+  quiet: True
+  buffsize: 1024
+
+everything:
+    all: True
+    quiet: True
+        </rosparam>
+    </node>
+</launch>
